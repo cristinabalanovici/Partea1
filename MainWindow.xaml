@@ -1,0 +1,187 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Partea1"
+        xmlns:StomatologieModel="clr-namespace:StomatologieModel;assembly=StomatologieModel" x:Class="Partea1.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="titluViewSource" d:DesignSource="{d:DesignInstance {x:Type StomatologieModel:Titlu}, CreateList=True}"/>
+        <CollectionViewSource x:Key="doctorViewSource" d:DesignSource="{d:DesignInstance {x:Type StomatologieModel:Doctor}, CreateList=True}"/>
+        <CollectionViewSource x:Key="pontajViewSource" d:DesignSource="{d:DesignInstance {x:Type StomatologieModel:Pontaj}, CreateList=True}"/>
+        <CollectionViewSource x:Key="concediuViewSource" d:DesignSource="{d:DesignInstance {x:Type StomatologieModel:Concediu}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="283*"/>
+            <ColumnDefinition Width="509*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl x:Name="tbCtrlStomatologie" HorizontalAlignment="Left" Height="363" Margin="37,24,0,0" VerticalAlignment="Top" Width="725" Grid.ColumnSpan="2">
+            <TabItem Header="Doctori">
+                <Grid Background="#FFE5E5E5" DataContext="{StaticResource doctorViewSource}">
+                    <DataGrid x:Name="doctorDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="309,10,10,125" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="doctorIdColumn" Binding="{Binding DoctorId}" Header="Doctor Id" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="numeColumn" Binding="{Binding Nume}" Header="Nume" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="prenumeColumn" Binding="{Binding Prenume}" Header="Prenume" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="titluIdColumn1" Binding="{Binding TitluId}" Header="Titlu Id" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid x:Name="grid2" HorizontalAlignment="Left" Margin="64,10,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Doctor Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="doctorIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding DoctorId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+                        <Label Content="Nume:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="numeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Nume, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Prenume:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBox x:Name="prenumeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Prenume, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Titlu Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="titluIdTextBox1" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding TitluId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+                    </Grid>
+                    <Button x:Name="btnNewDoctor" Content="New" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,167,0,0"/>
+                    <Button x:Name="btnEditDoctor" Content="Edit" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnDeleteDoctor" Content="Delete" HorizontalAlignment="Left" Margin="10,273,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnSaveDoctor" Content="Save" HorizontalAlignment="Left" Margin="183,167,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnCancelDoctor" Content="Cancel" HorizontalAlignment="Left" Margin="183,236,0,0" VerticalAlignment="Top" Width="75"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Pontaj">
+                <Grid Background="#FFE5E5E5" DataContext="{StaticResource pontajViewSource}">
+                    <DataGrid x:Name="pontajDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="309,10,10,125" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn x:Name="dataColumn" Header="Data" Width="SizeToHeader">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding Data, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn x:Name="doctorIdColumn1" Binding="{Binding DoctorId}" Header="Doctor Id" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="oraFinalColumn" Binding="{Binding OraFinal}" Header="Ora Final" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="oraStartColumn" Binding="{Binding OraStart}" Header="Ora Start" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="pontajIdColumn" Binding="{Binding PontajId}" Header="Pontaj Id" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid x:Name="grid3" HorizontalAlignment="Left" Margin="72,27,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Data:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="dataDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" SelectedDate="{Binding Data, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+                        <Label Content="Doctor Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="doctorIdTextBox1" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding DoctorId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+                        <Label Content="Ora Final:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBox x:Name="oraFinalTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding OraFinal, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Ora Start:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="oraStartTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding OraStart, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Pontaj Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="pontajIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding PontajId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                    <Button x:Name="btnNewPontaj" Content="New" HorizontalAlignment="Left" Margin="21,212,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnEditPontaj" Content="Edit" HorizontalAlignment="Left" Margin="21,257,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnDeletePontaj" Content="Delete" HorizontalAlignment="Left" Margin="21,294,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnSavePontaj" Content="Save" HorizontalAlignment="Left" Margin="186,212,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnCancelPontaj" Content="Cancel" HorizontalAlignment="Left" Margin="186,279,0,0" VerticalAlignment="Top" Width="75"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Concedii">
+                <Grid Background="#FFE5E5E5" DataContext="{StaticResource concediuViewSource}">
+                    <DataGrid x:Name="concediuDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="309,10,10,125" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="concediuIdColumn" Binding="{Binding ConcediuId}" Header="Concediu Id" Width="SizeToHeader"/>
+                            <DataGridTemplateColumn x:Name="dataFinalColumn" Header="Data Final" Width="SizeToHeader">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding DataFinal, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn x:Name="dataStartColumn" Header="Data Start" Width="SizeToHeader">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding DataStart, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn x:Name="doctorIdColumn2" Binding="{Binding DoctorId}" Header="Doctor Id" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid x:Name="grid4" HorizontalAlignment="Left" Margin="45,34,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Concediu Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="concediuIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding ConcediuId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+                        <Label Content="Data Final:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="dataFinalDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" SelectedDate="{Binding DataFinal, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+                        <Label Content="Data Start:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="dataStartDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="2" SelectedDate="{Binding DataStart, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+                        <Label Content="Doctor Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="doctorIdTextBox2" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding DoctorId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                    <Button x:Name="btnNewConcediu" Content="New" HorizontalAlignment="Left" Margin="23,195,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnEditConcediu" Content="Edit" HorizontalAlignment="Left" Margin="23,246,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnDeleteConcediu" Content="Delete" HorizontalAlignment="Left" Margin="23,295,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnCancelConcediu" Content="Cancel" HorizontalAlignment="Left" Margin="178,267,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnSaveConcediu" Content="Save" HorizontalAlignment="Left" Margin="178,213,0,0" VerticalAlignment="Top" Width="75"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Titluri">
+                <Grid Background="#FFE5E5E5" DataContext="{StaticResource titluViewSource}">
+                    <DataGrid x:Name="titluDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="309,10,10,125" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="titlu1Column" Binding="{Binding Titlu1}" Header="Titlu 1" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="titluIdColumn" Binding="{Binding TitluId}" Header="Titlu Id" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="432,245,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Titlu 1:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="titlu1TextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Titlu1, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Titlu Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="titluIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding TitluId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+                    </Grid>
+                    <Button x:Name="btnNewTitle" Content="New" HorizontalAlignment="Left" Margin="78,23,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnEditTitle" Content="Edit" HorizontalAlignment="Left" Margin="78,68,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnDeleteTitle" Content="Delete" HorizontalAlignment="Left" Margin="78,115,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnSaveTitle" Content="Save" HorizontalAlignment="Left" Margin="78,215,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnCancelTitle" Content="Cancel" HorizontalAlignment="Left" Margin="78,270,0,0" VerticalAlignment="Top" Width="75"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
