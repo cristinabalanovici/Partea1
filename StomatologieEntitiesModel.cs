@@ -16,6 +16,7 @@ namespace StomatologieModel
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Pontaj> Pontajs { get; set; }
         public virtual DbSet<Titlu> Titlus { get; set; }
+        public virtual DbSet<Norma> Normas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

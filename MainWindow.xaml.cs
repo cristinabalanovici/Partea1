@@ -38,6 +38,7 @@ namespace Partea1
         CollectionViewSource pontajVSource;
         CollectionViewSource concediuVSource;
         CollectionViewSource titluVSource;
+        CollectionViewSource normaVSource;
         public MainWindow()
         {
             InitializeComponent();
@@ -50,6 +51,9 @@ namespace Partea1
             System.Windows.Data.CollectionViewSource titluViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("titluViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // titluViewSource.Source = [generic data source]
+            System.Windows.Data.CollectionViewSource normaSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("normaViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // normaViewSource.Source = [generic data source]
             System.Windows.Data.CollectionViewSource doctorViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("doctorViewSource")));
             // Load data by setting the CollectionViewSource.Source property:
             // doctorViewSource.Source = [generic data source]
@@ -63,14 +67,17 @@ namespace Partea1
             pontajVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("pontajViewSource")));
             concediuVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("concediuViewSource")));
             titluVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("titluViewSource")));
+            normaVSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("normaViewSource")));
             doctorVSource.Source = ctx.Doctors.Local;
             pontajVSource.Source = ctx.Pontajs.Local;
             concediuVSource.Source = ctx.Concedius.Local;
             titluVSource.Source = ctx.Titlus.Local;
+            normaVSource.Source = ctx.Normas.Local;
             ctx.Doctors.Load();
             ctx.Pontajs.Load();
             ctx.Concedius.Load();
             ctx.Titlus.Load();
+            ctx.Normas.Load();
         }
 
         private void ReInitialize()
@@ -180,6 +187,9 @@ namespace Partea1
                     break;
                 case "Titluri":
                     SaveTitlu();
+                    break;
+                case "Norme":
+                    SaveNorma();
                     break;
             }
         }
@@ -384,6 +394,58 @@ namespace Partea1
                     {
                         titlu = (Titlu)titluDataGrid.SelectedItem;
                         ctx.Titlus.Remove(titlu);
+                        ctx.SaveChanges();
+                    }
+                    catch (DataException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    titluVSource.View.Refresh();
+                }
+            }
+        }
+
+        private void SaveNorma()
+        {
+            Norma norma = null;
+            if (action == ActionState.New)
+            {
+                try
+                {
+                    norma = new Norma()
+                    {
+                        Norma1 = norma1TextBox.Text.Trim()
+                    };
+                    ctx.Normas.Add(norma);
+                    normaVSource.View.Refresh();
+                    ctx.SaveChanges();
+                }
+                catch (DataException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                if (action == ActionState.Edit)
+                {
+                    try
+                    {
+                        norma = (Norma)normaDataGrid.SelectedItem;
+                        norma.Norma1 = norma1TextBox.Text.Trim();
+                        ctx.SaveChanges();
+                    }
+                    catch (DataException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else if (action == ActionState.Delete)
+                {
+                    try
+                    {
+                        norma = (Norma)normaDataGrid.SelectedItem;
+                        ctx.Normas.Remove(norma);
                         ctx.SaveChanges();
                     }
                     catch (DataException ex)

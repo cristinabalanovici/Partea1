@@ -12,7 +12,8 @@
         <CollectionViewSource x:Key="doctorViewSource" d:DesignSource="{d:DesignInstance {x:Type StomatologieModel:Doctor}, CreateList=True}"/>
         <CollectionViewSource x:Key="pontajViewSource" d:DesignSource="{d:DesignInstance {x:Type StomatologieModel:Pontaj}, CreateList=True}"/>
         <CollectionViewSource x:Key="concediuViewSource" d:DesignSource="{d:DesignInstance {x:Type StomatologieModel:Concediu}, CreateList=True}"/>
-        <ControlTemplate x:Key="validationTemplate">
+		<CollectionViewSource x:Key="normaViewSource" d:DesignSource="{d:DesignInstance {x:Type StomatologieModel:Norma}, CreateList=True}"/>
+		<ControlTemplate x:Key="validationTemplate">
             <DockPanel>
                 <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
                 <AdornedElementPlaceholder/>
@@ -53,7 +54,8 @@
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="true" />
                                 </MultiDataTrigger>
-                            </Style.Triggers>
+                            </Style.Triggers>
+
                         </Style>
                     </Button.Style>
                 </Button>
@@ -69,6 +71,7 @@
                             <DataGridTextColumn x:Name="numeColumn" Binding="{Binding Nume}" Header="Nume" Width="SizeToHeader"/>
                             <DataGridTextColumn x:Name="prenumeColumn" Binding="{Binding Prenume}" Header="Prenume" Width="SizeToHeader"/>
                             <DataGridTextColumn x:Name="titluIdColumn1" Binding="{Binding TitluId}" Header="Titlu Id" Width="SizeToHeader"/>
+							<DataGridTextColumn x:Name="normaColumn" Binding="{Binding Norma}" Header="Norma" Width="SizeToHeader"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid x:Name="grid2" HorizontalAlignment="Left" Margin="64,10,0,0" VerticalAlignment="Top">
@@ -81,6 +84,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Doctor Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
                         <TextBox x:Name="doctorIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding DoctorId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
@@ -92,6 +96,7 @@ Style="{StaticResource textBoxInError}"/>
 Style="{StaticResource textBoxInError}"/>
                         <Label Content="Titlu Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
                         <TextBox x:Name="titluIdTextBox1" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding TitluId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+						<Label Content="Norma:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
                     </Grid>
                     <Button x:Name="btnPrev" Content="Previous" HorizontalAlignment="Left" Margin="309,231,0,0" VerticalAlignment="Top" Width="75" Click="btnPrev_Click"/>
                     <Button x:Name="btnNext" Content="Next" HorizontalAlignment="Left" Margin="519,231,0,0" VerticalAlignment="Top" Width="75" Click="btnNext_Click"/>
@@ -110,6 +115,7 @@ Style="{StaticResource textBoxInError}"/>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn x:Name="doctorIdColumn1" Binding="{Binding DoctorId}" Header="Doctor Id" Width="SizeToHeader"/>
+							<DataGridTextColumn x:Name="normaColumn1" Binding="{Binding Norma}" Header="Norma" Width="SizeToHeader"/>
                             <DataGridTextColumn x:Name="oraFinalColumn" Binding="{Binding OraFinal}" Header="Ora Final" Width="SizeToHeader"/>
                             <DataGridTextColumn x:Name="oraStartColumn" Binding="{Binding OraStart}" Header="Ora Start" Width="SizeToHeader"/>
                             <DataGridTextColumn x:Name="pontajIdColumn" Binding="{Binding PontajId}" Header="Pontaj Id" Width="SizeToHeader"/>
@@ -122,6 +128,7 @@ Style="{StaticResource textBoxInError}"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -131,11 +138,13 @@ Style="{StaticResource textBoxInError}"/>
                         <DatePicker x:Name="dataDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" SelectedDate="{Binding Data, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
                         <Label Content="Doctor Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
                         <TextBox x:Name="doctorIdTextBox1" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding DoctorId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
-                        <Label Content="Ora Final:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+						<Label Content="Norma:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+						<TextBox x:Name="normaBox1" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Norma, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
+                        <Label Content="Ora Final:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
                         <TextBox x:Name="oraFinalTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding OraFinal, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Ora Start:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <Label Content="Ora Start:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
                         <TextBox x:Name="oraStartTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding OraStart, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                        <Label Content="Pontaj Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <Label Content="Pontaj Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
                         <TextBox x:Name="pontajIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding PontajId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                     </Grid>
                     <Button x:Name="btnPrevPontaj"  Content="Previous" HorizontalAlignment="Left" Margin="309,238,0,0" VerticalAlignment="Top" Width="75" Click="btnPrevPontaj_Click"/>
