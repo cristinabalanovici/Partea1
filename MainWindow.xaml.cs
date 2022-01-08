@@ -82,14 +82,36 @@ namespace Partea1
             }
             gbActions.IsEnabled = false;
         }
+        private void setValidationBinding()
+        {
+            Binding numeValidationBinding = new Binding();
+            numeValidationBinding.Source = doctorVSource;
+            numeValidationBinding.Path = new PropertyPath("Nume");
+            numeValidationBinding.NotifyOnValidationError = true;
+            numeValidationBinding.Mode = BindingMode.TwoWay;
+            numeValidationBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            numeValidationBinding.ValidationRules.Add(new StringNotEmpty());
+            numeTextBox.SetBinding(TextBox.TextProperty, numeValidationBinding);
+            Binding prenumeValidationBinding = new Binding();
+            prenumeValidationBinding.Source = doctorVSource;
+            prenumeValidationBinding.Path = new PropertyPath("Prenume");
+            prenumeValidationBinding.NotifyOnValidationError = true;
+            prenumeValidationBinding.Mode = BindingMode.TwoWay;
+            prenumeValidationBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            prenumeValidationBinding.ValidationRules.Add(new StringNotEmpty());
+            prenumeTextBox.SetBinding(TextBox.TextProperty, prenumeValidationBinding);
+        }
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             action = ActionState.New;
+            setValidationBinding();
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             action = ActionState.Edit;
+
+            setValidationBinding();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -386,5 +408,7 @@ namespace Partea1
             }
             gbActions.IsEnabled = true;
         }
+
+        
     }
 }
